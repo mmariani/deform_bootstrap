@@ -2,9 +2,10 @@
 deform_bootstrap
 ================
 
-``deform_bootstrap`` provides `Bootstrap
-<http://twitter.github.com/bootstrap/>`_ compatible templates for the
-`deform form library <http://pypi.python.org/pypi/deform/0.9.4>`_.
+``deform_bootstrap`` provides `Twitter Bootstrap
+<http://twitter.github.com/bootstrap/>`_ compatible widgets, templates
+and styles for the `deform form library
+<http://pypi.python.org/pypi/deform/0.9.4>`_.
 
 How to use it
 =============
@@ -129,10 +130,17 @@ CSS
   This file contains a small fix for conflicts between chosen and bootstrap.
   Only needed if you make use of chosen, but harmless if you don't.
 
+``bootstrap-datepicker.css``
+  The styles for the *native* bootstrap datepicker widget (see above).
+
+Note that ``chosen_bootstrap.css`` and ``bootstrap-datepicker.css``
+are included in ``deform_bootstrap.css``, so you will only need them
+if you use some other version of the bootstrap css.
+
 JS
 --
 
-``bootstrap_datepicker.js``
+``bootstrap-datepicker.js``
   Only needed if you want to use the *native* bootstrap datepicker widget
   (see above).
 
@@ -219,3 +227,31 @@ or ``input_append`` as keyword arguments to the widget constructor in your
               input_append="kg",
               css_class="span1",
           ))
+
+bootstrap_form_style
+--------------------
+
+Bootstrap supports `four form styles`__.  By default, ``deform_bootstrap``
+uses the ``.form-horizontal`` style.  You can specify one of the other
+styles be setting the ``bootstrap_form_style`` attribute of your ``Form``::
+
+  myform = Form(myschema, bootstrap_form_style='form-vertical')
+
+__ http://twitter.github.com/bootstrap/base-css.html#forms
+
+inline
+------
+
+Bootstrap supports inline checkbox and radio choices.  Normally
+``RadioChoiceWidget``\s and ``CheckboxChoiceWidgets``\s are displayed
+with one choice per line.  To select the inline style, set the
+``inline`` attribute of the choice widget to a trueish value::
+
+  class MySchema(colander.Schema):
+      choice = colander.SchemaNode(
+          colander.String(),
+          widget=deform.widget.CheckboxChoiceWidget(
+              values=[(u'a', u'Apple'),
+                      (u'b', u'Bear'),
+                      (u'c', u'Computer')],
+              inline=True))
